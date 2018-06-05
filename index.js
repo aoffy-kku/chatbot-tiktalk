@@ -3,11 +3,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-app = express().use(bodyParser.json());
+const { Wit, log, interactive } = require('node-wit');
 
 const PORT = process.env.PORT || 1337;
 const PAGE_ACCESS_TOKEN = "EAAaE2cwOZAfABAH7C23UMiyxtk9aZBnfLskVqBBK04ZB5p20201b54CgBoC8UoKKoGBCFhpt5wdfvQhpp3VdqB7l8ElXS9xn8HlQIYIf0EJiT65sCQjwapjiWzfZAuWoVXn2vJIPt2VOqZCe6JLz6qt63ZAtpDgDf0ZA62F1vDDPAZDZD";
+const client = new Wit({
+  accessToken: "5IRZPGUBOVZK67LKPO4HTMHPITBRDJSN",
+  logger: new log.Logger(log.DEBUG)
+});
 
+const texts = {
+  greeting: ["Hi", "Hello", "What's up"],
+  farewell: ["Good bye", "Hope to see you again", "Bye"]
+};
+
+interactive(client);
+
+app = express().use(bodyParser.json());
 app.listen(PORT, () => console.log(`Messenger Webhook is listening on PORT ${PORT}`));
 
 app.post('/webhook', (req, res) => {
@@ -23,7 +35,24 @@ app.post('/webhook', (req, res) => {
       console.log('Sender PSID: ' + sender_psid);
 
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);
+        if (webhook_event.message.text) {
+          // Send message to Wit.ai
+          client.message(webhook_event.message.text, {})
+          .then((data) => {
+            console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+            let msg = "";
+            if(data.entities.intent.value === "greeting") {
+              msg = texts.greeting[Math.floor(Math.random() * Math.floor(texts.greeting.length))]
+            } else if(data.entities.intent.value === "farewell") {
+              msg = texts.farewell[Math.floor(Math.random() * Math.floor(texts.farewell.length))]
+            } else {
+              msg = "Sorry, i do not understand";
+            }
+            //handleMessage(sender_psid, webhook_event.message);
+            handleMessage(sender_psid, msg);
+          })
+          .catch(console.error);
+        }
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
@@ -59,9 +88,9 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response;
 
-  if (received_message.text) {
+  if (received_message) {
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": received_message
     }
   }
   callSendAPI(sender_psid, response);
