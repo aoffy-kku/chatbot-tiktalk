@@ -41,9 +41,9 @@ app.post('/webhook', (req, res) => {
           .then((data) => {
             console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
             let msg = "";
-            if(data.entities.intent.value === "greeting") {
+            if(data.entities.intent[0].value === "greeting") {
               msg = texts.greeting[Math.floor(Math.random() * Math.floor(texts.greeting.length))]
-            } else if(data.entities.intent.value === "farewell") {
+            } else if(data.entities.intent[0].value === "farewell" || data.entities.bye[0].value) {
               msg = texts.farewell[Math.floor(Math.random() * Math.floor(texts.farewell.length))]
             } else {
               msg = "Sorry, i do not understand";
