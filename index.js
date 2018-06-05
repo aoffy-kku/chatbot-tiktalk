@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const { Wit, log, interactive } = require('node-wit');
+const { Wit, log } = require('node-wit');
 
 const PORT = process.env.PORT || 1337;
 const PAGE_ACCESS_TOKEN = "EAAaE2cwOZAfABAH7C23UMiyxtk9aZBnfLskVqBBK04ZB5p20201b54CgBoC8UoKKoGBCFhpt5wdfvQhpp3VdqB7l8ElXS9xn8HlQIYIf0EJiT65sCQjwapjiWzfZAuWoVXn2vJIPt2VOqZCe6JLz6qt63ZAtpDgDf0ZA62F1vDDPAZDZD";
@@ -17,7 +17,7 @@ const texts = {
   farewell: ["Good bye", "Hope to see you again", "Bye"]
 };
 
-interactive(client);
+//interactive(client);
 
 app = express().use(bodyParser.json());
 app.listen(PORT, () => console.log(`Messenger Webhook is listening on PORT ${PORT}`));
