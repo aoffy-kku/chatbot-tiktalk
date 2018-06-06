@@ -152,7 +152,9 @@ function handlePostback(sender_psid, received_postback) {
                   "url": base_url,
                   "messenger_extensions": false,
                   "webview_height_ratio": "tall"
-                },
+                }
+              },
+              {
                 "buttons": [
                   {
                     "type": "postback",
@@ -185,7 +187,8 @@ function handlePostback(sender_psid, received_postback) {
         "attachment": {
           "type": "template",
           "payload": {
-            "template_type": "generic",
+            "template_type": "list",
+            "top_element_style": "compact",
             "elements": [
               {
                 "title": "Welcome to TakeMeTour's Help Center",
@@ -196,21 +199,34 @@ function handlePostback(sender_psid, received_postback) {
                   "url": help_url,
                   "messenger_extensions": false,
                   "webview_height_ratio": "tall"
-                },
+                }
+              }, {
                 "buttons": [
                   {
                     "type": "postback",
                     "title": "Travelers",
                     "payload": travelers
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "postback",
                     "title": "Partners",
                     "payload": partners
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "postback",
                     "title": "Local Expert",
                     "payload": LX
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "postback",
                     "title": "Tickets",
                     "payload": tickets
@@ -230,6 +246,7 @@ function handlePostback(sender_psid, received_postback) {
           "type": "template",
           "payload": {
             "template_type": "generic",
+            "top_element_style": "compact",
             "elements": [
               {
                 "title": "Welcome to TakeMeTour's Help Center",
@@ -240,29 +257,52 @@ function handlePostback(sender_psid, received_postback) {
                   "url": travelers_url.base,
                   "messenger_extensions": false,
                   "webview_height_ratio": "tall"
-                },
+                }
+              },
+              {
                 "buttons": [
                   {
                     "type": "web_url",
                     "title": "Account Setting",
                     "url": travelers_url.account
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Booking Process",
                     "url": travelers_url.booking
-                  }, {
+                  },
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Payment Process",
                     "url": travelers_url.payment
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Post-Trip Process",
                     "url": travelers_url.posttrip
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Cancellation Policy",
                     "url": travelers_url.cancellation
-                  }, {
+                  }
+                ]
+              },
+              {
+                "buttons": [
+                  {
                     "type": "postback",
                     "title": "Back",
                     "payload  ": need_help
@@ -281,7 +321,8 @@ function handlePostback(sender_psid, received_postback) {
         "attachment": {
           "type": "template",
           "payload": {
-            "template_type": "generic",
+            "template_type": "list",
+            "top_element_style": "compact",
             "elements": [
               {
                 "title": "Welcome to TakeMeTour's Help Center",
@@ -293,6 +334,7 @@ function handlePostback(sender_psid, received_postback) {
                   "messenger_extensions": false,
                   "webview_height_ratio": "tall"
                 },
+              }, {
                 "buttons": [
                   {
                     "type": "web_url",
@@ -300,31 +342,51 @@ function handlePostback(sender_psid, received_postback) {
                     "url": lx_url.account,
                     "messenger_extensions": false,
                     "webview_height_ratio": "tall"
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Booking Process",
                     "url": lx_url.booking,
                     "messenger_extensions": false,
                     "webview_height_ratio": "tall"
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Trip Listing",
                     "url": lx_url.trip,
                     "messenger_extensions": false,
                     "webview_height_ratio": "tall"
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Post-Trip Process",
                     "url": lx_url.posttrip,
                     "messenger_extensions": false,
                     "webview_height_ratio": "tall"
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "web_url",
                     "title": "Cancellation Policy",
                     "url": lx_url.cancellation,
                     "messenger_extensions": false,
                     "webview_height_ratio": "tall"
-                  }, {
+                  }
+                ]
+              }, {
+                "buttons": [
+                  {
                     "type": "postback",
                     "title": "Back",
                     "payload": need_help
