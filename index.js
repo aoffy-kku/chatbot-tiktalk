@@ -40,13 +40,41 @@ app.post('/webhook', (req, res) => {
           client.message(webhook_event.message.text, {})
           .then((data) => {
             console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-            let msg = "";
-            if(data.entities.intent[0].value === "greeting") {
-              msg = texts.greeting[Math.floor(Math.random() * Math.floor(texts.greeting.length))]
-            } else if(data.entities.intent[0].value === "farewell" || data.entities.bye[0].value) {
-              msg = texts.farewell[Math.floor(Math.random() * Math.floor(texts.farewell.length))]
+            const msg = "";
+            const greeting = firstEntities(message.nlp, 'greetings');
+            const thank = firstEntities(message.nlp, 'thanks');
+            const bye = firstEntities(message.nlp, 'bye');
+            const datetime = firstEntities(message.nlp, 'datetime');
+            const amount_of_money = firstEntities(message.nlp, 'amount_of_money');
+            const phone_number = firstEntities(message.nlp, 'phone_number');
+            const email = firstEntities(message.nlp, 'email');
+            const quantity = firstEntities(message.nlp, 'quantity');
+            const distance = firstEntities(message.nlp, 'distance');
+            const temperature = firstEntities(message.nlp, 'temperature');
+            const volume = firstEntities(message.nlp, 'volume');
+            const location = firstEntities(message.nlp, 'location');
+            const url = firstEntities(message.nlp, 'url');
+            const sentiment = firstEntities(message.nlp, 'sentiment');
+            const duration = firstEntities(message.nlp, 'duration');
+
+            if(greeting && greeting.confidence > 0.8) {
+              msg = "Hi, what can i help you?";
+            } else if(thank && thank.confidence > 0.8) {
+              msg = "You’re Welcome. :)";
+            } else if(bye && bye.confidence > 0.8) {
+              msg = "Good bye.";
+            } else if(datetime && datetime.confidence > 0.8) { 
+              msg = datetime.value;
+            } else if(localtion && localtion.confidence > 0.8) {
+              msg = location.value;
+            } else if(email && email.confidence > 0.8) {
+              msg = email.value;
+            } else if(temperature && temperature.confidence > 0.8) {
+              msg = temperature.value;
+            } else if(url && url.confidence > 0.8) { 
+              msg = url.value;
             } else {
-              msg = "Sorry, i do not understand";
+              msg = "Please contact us at contact@takemetour.com"
             }
             //handleMessage(sender_psid, webhook_event.message);
             handleMessage(sender_psid, msg);
@@ -84,6 +112,11 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+// First entities
+function firstEntities(nlp, name) {
+  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+}
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response;
@@ -97,9 +130,9 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+// function handlePostback(sender_psid, received_postback) {
 
-}
+// }
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
