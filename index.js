@@ -61,7 +61,7 @@ app.post('/webhook', (req, res) => {
             if (greeting && greeting.confidence > 0.8) {
               msg = "Hi, what can i help you?";
             } else if (thank && thank.confidence > 0.8) {
-              msg = "You’re Welcome. :)";
+              msg = "You’re Welcome.)";
             } else if (bye && bye.confidence > 0.8) {
               msg = "Good bye.";
             } else if (datetime && datetime.confidence > 0.8) {
@@ -148,8 +148,47 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response
+    "message": {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [
+            {
+              "title": "Welcome!",
+              "image_url": "https://petersfancybrownhats.com/company_image.png",
+              "subtitle": "We have the right hat for everyone.",
+              "default_action": {
+                "type": "web_url",
+                "url": "https://petersfancybrownhats.com/view?item=103",
+                "messenger_extensions": false,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://petersfancybrownhats.com/"
+              },
+              "buttons": [
+                {
+                  "type": "web_url",
+                  "url": "https://petersfancybrownhats.com",
+                  "title": "View Website"
+                }, {
+                  "type": "postback",
+                  "title": "Start Chatting",
+                  "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
   }
+
+  // let request_body = {
+  //   "recipient": {
+  //     "id": sender_psid
+  //   },
+  //   "message": response,
+  // }
 
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
