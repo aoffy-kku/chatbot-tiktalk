@@ -130,9 +130,10 @@ function handleMessage(sender_psid, received_message) {
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
   let response_message = null;
-  console.log(JSON.stringify(received_postback));
+  console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case welcome:
+      console.log(welcome);
       response_message = {
         "attachment": {
           "type": "template",
@@ -169,12 +170,14 @@ function handlePostback(sender_psid, received_postback) {
       callSendAPI(sender_psid, response_message);
       break;
     case chatting:
+      console.log(chatting);
       response_message = {
         "text": "Hello"
       };
-      handleMessage(sender_psid, response_message);
+      callSendAPI(sender_psid, response_message);
       break;
     case travelers:
+      console.log(travelers);
       response_message = {
         "attachment": {
           "type": "template",
@@ -222,6 +225,7 @@ function handlePostback(sender_psid, received_postback) {
       callSendAPI(sender_psid, response_message);
       break;
     case partners:
+      console.log(partners);
       response_message = {
         "attachment": {
           "type": "template",
@@ -273,6 +277,7 @@ function handlePostback(sender_psid, received_postback) {
       callSendAPI(sender_psid, response_message);
       break;
     case LX:
+      console.log(LX);
       response_message = {
         "attachment": {
           "type": "template",
