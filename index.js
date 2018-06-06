@@ -179,7 +179,7 @@ function handlePostback(sender_psid, received_postback) {
       };
       callSendAPI(sender_psid, response_message);
       break;
-    case travelers:
+    case need_help:
       console.log(travelers);
       response_message = {
         "attachment": {
@@ -227,8 +227,8 @@ function handlePostback(sender_psid, received_postback) {
       };
       callSendAPI(sender_psid, response_message);
       break;
-    case partners:
-      console.log(partners);
+    case travelers:
+      console.log(travelers);
       response_message = {
         "attachment": {
           "type": "template",
@@ -332,6 +332,13 @@ function handlePostback(sender_psid, received_postback) {
       callSendAPI(sender_psid, response_message);
       break;
     case tickets:
+      callSendAPI(sender_psid, response_message);
+      break;
+    case partners:
+      console.log(partners);
+      response_message = {
+        "text": email
+      };
       callSendAPI(sender_psid, response_message);
       break;
     default:
