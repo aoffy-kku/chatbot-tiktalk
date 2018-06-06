@@ -180,7 +180,7 @@ function handlePostback(sender_psid, received_postback) {
       callSendAPI(sender_psid, response_message);
       break;
     case need_help:
-      console.log(travelers);
+      console.log(need_help);
       response_message = {
         "attachment": {
           "type": "template",
@@ -200,7 +200,7 @@ function handlePostback(sender_psid, received_postback) {
                 "buttons": [
                   {
                     "type": "postback",
-                    "title": "Booking Process ",
+                    "title": "Travelers",
                     "payload": travelers
                   }, {
                     "type": "postback",
@@ -210,10 +210,6 @@ function handlePostback(sender_psid, received_postback) {
                     "type": "postback",
                     "title": "Local Expert",
                     "payload": LX
-                  }, {
-                    "type": "postback",
-                    "title": "Partners",
-                    "payload": partners
                   }, {
                     "type": "postback",
                     "title": "Tickets",
@@ -301,23 +297,33 @@ function handlePostback(sender_psid, received_postback) {
                   {
                     "type": "web_url",
                     "title": "Account Setting",
-                    "url": lx_url.account
+                    "url": lx_url.account,
+                    "messenger_extensions": false,
+                    "webview_height_ratio": "tall"
                   }, {
                     "type": "web_url",
                     "title": "Booking Process",
-                    "url": lx_url.booking
+                    "url": lx_url.booking,
+                    "messenger_extensions": false,
+                    "webview_height_ratio": "tall"
                   }, {
                     "type": "web_url",
                     "title": "Trip Listing",
-                    "url": lx_url.trip
+                    "url": lx_url.trip,
+                    "messenger_extensions": false,
+                    "webview_height_ratio": "tall"
                   }, {
                     "type": "web_url",
                     "title": "Post-Trip Process",
-                    "url": lx_url.posttrip
+                    "url": lx_url.posttrip,
+                    "messenger_extensions": false,
+                    "webview_height_ratio": "tall"
                   }, {
                     "type": "web_url",
                     "title": "Cancellation Policy",
-                    "url": lx_url.cancellation
+                    "url": lx_url.cancellation,
+                    "messenger_extensions": false,
+                    "webview_height_ratio": "tall"
                   }, {
                     "type": "postback",
                     "title": "Back",
