@@ -62,7 +62,7 @@ app.post('/webhook', (req, res) => {
             msg = "Good bye.";
           } else if (datetime && datetime.confidence > 0.8) {
             msg = datetime.value;
-          } else if (localtion && localtion.confidence > 0.8) {
+          } else if (location && location.confidence > 0.8) {
             msg = location.value;
           } else if (email && email.confidence > 0.8) {
             msg = email.value;
