@@ -152,9 +152,7 @@ function handlePostback(sender_psid, received_postback) {
                   "url": base_url,
                   "messenger_extensions": false,
                   "webview_height_ratio": "tall"
-                }
-              },
-              {
+                },
                 "buttons": [
                   {
                     "type": "postback",
