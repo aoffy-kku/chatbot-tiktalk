@@ -36,6 +36,7 @@ app.post('/webhook', (req, res) => {
       const message = webhook_event.message;
       if (message) {
         if (message.text) {
+          console.log("NLP: ", JSON.stringify(message.nlp));
           // Facebook NLP
           let msg = "";
           const greeting = firstEntities(message.nlp, 'greetings');
