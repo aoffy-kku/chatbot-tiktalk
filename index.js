@@ -156,19 +156,19 @@ function callSendAPI(sender_psid, response) {
           "elements": [
             {
               "title": "Welcome!",
-              "image_url": "https://petersfancybrownhats.com/company_image.png",
+              "image_url": "https://riot.agency/assets/img/works/messenger/img-1.jpg",
               "subtitle": "We have the right hat for everyone.",
               "default_action": {
                 "type": "web_url",
-                "url": "https://petersfancybrownhats.com/view?item=103",
+                "url": "https://www.messenger.com/",
                 "messenger_extensions": false,
                 "webview_height_ratio": "tall",
-                "fallback_url": "https://petersfancybrownhats.com/"
+                "fallback_url": "https://www.messenger.com/"
               },
               "buttons": [
                 {
                   "type": "web_url",
-                  "url": "https://petersfancybrownhats.com",
+                  "url": "https://www.messenger.com/",
                   "title": "View Website"
                 }, {
                   "type": "postback",
