@@ -146,7 +146,7 @@ function handlePostback(sender_psid, received_postback) {
                   "type": "web_url",
                   "url": base_url,
                   "messenger_extensions": false,
-                  "webview_height_ratio": "tall",
+                  "webview_height_ratio": "tall"
                 },
                 "buttons": [
                   {
@@ -190,8 +190,7 @@ function handlePostback(sender_psid, received_postback) {
                   "type": "web_url",
                   "url": help_url,
                   "messenger_extensions": false,
-                  "webview_height_ratio": "tall",
-                  "fallback_url": help_url
+                  "webview_height_ratio": "tall"
                 },
                 "buttons": [
                   {
@@ -238,8 +237,7 @@ function handlePostback(sender_psid, received_postback) {
                   "type": "web_url",
                   "url": travelers_url.base,
                   "messenger_extensions": false,
-                  "webview_height_ratio": "tall",
-                  "fallback_url": travelers_url.base
+                  "webview_height_ratio": "tall"
                 },
                 "buttons": [
                   {
@@ -290,8 +288,7 @@ function handlePostback(sender_psid, received_postback) {
                   "type": "web_url",
                   "url": lx_url.base,
                   "messenger_extensions": false,
-                  "webview_height_ratio": "tall",
-                  "fallback_url": lx_url.base
+                  "webview_height_ratio": "tall"
                 },
                 "buttons": [
                   {
@@ -341,39 +338,7 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [
-            {
-              "title": "Welcome to takemetour",
-              "image_url": logo_url,
-              "subtitle": `Thailand's Largest Selection of Local Experiences`,
-              "default_action": {
-                "type": "web_url",
-                "url": base_url,
-                "messenger_extensions": false,
-                "webview_height_ratio": "tall",
-                "fallback_url": base_url
-              },
-              "buttons": [
-                {
-                  "type": "web_url",
-                  "url": base_url,
-                  "title": "View Website"
-                }, {
-                  "type": "postback",
-                  "title": "Start Chatting",
-                  "payload": "CHATTING"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
+    "message": response
   }
 
   console.log("REQUEST: ", JSON.stringify(request_body));
