@@ -158,18 +158,6 @@ function handlePostback(sender_psid, received_postback) {
                     "type": "postback",
                     "title": "Go Help",
                     "payload": need_help
-                  }, {
-                    "type": "postback",
-                    "title": "Go Help",
-                    "payload": need_help
-                  }, {
-                    "type": "postback",
-                    "title": "Go Help",
-                    "payload": need_help
-                  }, {
-                    "type": "postback",
-                    "title": "Go Help",
-                    "payload": need_help
                   },
                   {
                     "type": "postback",
