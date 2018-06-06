@@ -154,7 +154,8 @@ function handlePostback(sender_psid, received_postback) {
                     "type": "web_url",
                     "url": base_url,
                     "title": "View Website"
-                  }, {
+                  },
+                  {
                     "type": "postback",
                     "title": "Start Chatting",
                     "payload": "CHATTING"
