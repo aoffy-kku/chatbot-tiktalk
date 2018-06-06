@@ -69,7 +69,7 @@ app.post('/webhook', (req, res) => {
         if (message.text) {
           if (isEnglish(message.text)) {
             //handleMessage(sender_psid, webhook_event.message);
-            handlePostback(sender_psid, { payload: "need_help" });
+            handlePostback(sender_psid, { payload: need_help });
             // Send message to Wit.ai
             client.message(message.text, {})
               .then((data) => {
@@ -129,6 +129,7 @@ function handleMessage(sender_psid, received_message) {
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
   const response_message = null;
+  console.log(JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case need_help:
       response_message = {
