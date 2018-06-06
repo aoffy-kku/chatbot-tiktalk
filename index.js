@@ -19,6 +19,7 @@ const texts = {
 const logo_url = `https://lh3.googleusercontent.com/sNzOU5yocb97rUQyqKVJWs5BGGMcYwwEIi-wE3pIRL0kyBbqV8uYoMdYAzlv4mTHLz3H=w300`;
 const base_url = `https://www.takemetour.com/`;
 const help_url = `https://takemetoursupport.zendesk.com/hc/en-us`;
+const welcome = "WELCOME";
 const need_help = "NEED_HELP";
 const chatting = "CHATTING";
 const travelers = "TRAVELERS";
@@ -69,7 +70,7 @@ app.post('/webhook', (req, res) => {
         if (message.text) {
           if (isEnglish(message.text)) {
             //handleMessage(sender_psid, webhook_event.message);
-            handlePostback(sender_psid, { payload: need_help });
+            handlePostback(sender_psid, { payload: welcome });
             // Send message to Wit.ai
             client.message(message.text, {})
               .then((data) => {
@@ -131,7 +132,7 @@ function handlePostback(sender_psid, received_postback) {
   let response_message = null;
   console.log(JSON.stringify(received_postback));
   switch (received_postback.payload) {
-    case need_help:
+    case welcome:
       response_message = {
         "attachment": {
           "type": "template",
@@ -150,16 +151,14 @@ function handlePostback(sender_psid, received_postback) {
                 },
                 "buttons": [
                   {
-                    "type": "web_url",
-                    "url": base_url,
-                    "title": "View Website",
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall",
+                    "type": "postback",
+                    "title": "Go Help",
+                    "payload": need_help
                   },
                   {
                     "type": "postback",
                     "title": "Start Chatting",
-                    "payload": "CHATTING"
+                    "payload": chatting
                   }
                 ]
               }
