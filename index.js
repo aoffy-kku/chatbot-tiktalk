@@ -36,7 +36,7 @@ app.post('/webhook', (req, res) => {
       const message = webhook_event.message;
       if (message) {
         if (message.text) {
-          let regexp = new RegExp(`/^[A-Za-z][A-Za-z0-9]*$/`);
+          const regexp = new RegExp("^[a-zA-Z0-9$@$!%*?&#^-_. +]+$");
           const isEnglish = regexp.test(message.text);
           let msg = "";
           if (isEnglish) {
