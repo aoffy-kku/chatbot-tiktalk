@@ -128,7 +128,7 @@ function handleMessage(sender_psid, received_message) {
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  const response_message = null;
+  let response_message = null;
   console.log(JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case need_help:
