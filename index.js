@@ -374,6 +374,8 @@ function callSendAPI(sender_psid, response) {
     },
   }
 
+  console.log("REQUEST: ", JSON.stringify(request_body));
+
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
