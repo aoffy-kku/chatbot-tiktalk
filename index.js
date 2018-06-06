@@ -37,7 +37,7 @@ app.post('/webhook', (req, res) => {
       if (message) {
         if (message.text) {
           // Facebook NLP
-          const msg = "";
+          let msg = "";
           const greeting = firstEntities(message.nlp, 'greetings');
           const thank = firstEntities(message.nlp, 'thanks');
           const bye = firstEntities(message.nlp, 'bye');
@@ -58,7 +58,7 @@ app.post('/webhook', (req, res) => {
             msg = "Hi, what can i help you?";
           } else if (thank && thank.confidence > 0.8) {
             msg = "You’re Welcome. :)";
-          } else if (bye && bye.confidence > 0.8) {
+          } else if (bye && bye.confidence > 0.8) { 
             msg = "Good bye.";
           } else if (datetime && datetime.confidence > 0.8) {
             msg = datetime.value;
