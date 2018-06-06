@@ -339,7 +339,39 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response,
+    "message": {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [
+            {
+              "title": "Welcome to takemetour",
+              "image_url": logo_url,
+              "subtitle": `Thailand's Largest Selection of Local Experiences`,
+              "default_action": {
+                "type": "web_url",
+                "url": base_url,
+                "messenger_extensions": false,
+                "webview_height_ratio": "tall",
+                "fallback_url": base_url
+              },
+              "buttons": [
+                {
+                  "type": "web_url",
+                  "url": base_url,
+                  "title": "View Website"
+                }, {
+                  "type": "postback",
+                  "title": "Start Chatting",
+                  "payload": "CHATTING"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
   }
 
   request({
