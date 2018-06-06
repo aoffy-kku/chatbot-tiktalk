@@ -71,7 +71,7 @@ app.post('/webhook', (req, res) => {
           let msg = "";
           if (isEnglish) {
             //handleMessage(sender_psid, webhook_event.message);
-            handlePostback(sender_psid, "need_help");
+            handlePostback(sender_psid, { payload: "need_help" });
             // Send message to Wit.ai
             client.message(message.text, {})
               .then((data) => {
