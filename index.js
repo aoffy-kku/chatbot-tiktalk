@@ -66,7 +66,9 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
+      const postback = webhook_event.postback;
       if (message) {
+        console.log("MESSAGE!!");
         if (message.text) {
           if (isEnglish(message.text)) {
             //handleMessage(sender_psid, webhook_event.message);
@@ -79,8 +81,9 @@ app.post('/webhook', (req, res) => {
               .catch(console.error);
           }
         }
-      } else if (webhook_event.postback) {
-        handlePostback(sender_psid, webhook_event.postback);
+      } else if (postback) {
+        console.log("POSTBACK!!");
+        handlePostback(sender_psid, postback);
       }
     });
 
