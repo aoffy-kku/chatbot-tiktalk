@@ -36,17 +36,13 @@ const partner_message = {
   "attachment": {
     "type": "template",
     "payload": {
-      "template_type": "button  ",
+      "template_type": "button",
       "text": "Do you want to send an email?",
-      "elements": [
+      "buttons": [
         {
-          "buttons": [
-            {
-              "type": "web_url",
-              "title": "Send",
-              "url": `mailto:${email}`
-            }
-          ]
+          "type": "web_url",
+          "title": "Send",
+          "url": `mailto:${email}`
         }
       ]
     }
