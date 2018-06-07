@@ -325,11 +325,9 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case chatting:
       console.log(chatting);
-      curl
-        .setHeaders([
-          'Content-Type: application/json'
-        ])
-        .setBody({
+      fetch(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({
           "recipient": {
             "id": sender_psid
           },
@@ -338,14 +336,13 @@ function handlePostback(sender_psid, received_postback) {
           "message": {
             "text": "Wait a minute. We are passing to takemetour support"
           }
-        })
-        .post(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`)
-        .then(({ statusCode, body, headers }) => {
-          console.log(statusCode, body, headers)
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        }), // data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
       break;
     case need_help:
       console.log(need_help);
