@@ -8,7 +8,7 @@ const curl = new (require('curl-request'))();
 
 const PORT = process.env.PORT || 1337;
 const PAGE_ACCESS_TOKEN = "EAAaE2cwOZAfABAH7C23UMiyxtk9aZBnfLskVqBBK04ZB5p20201b54CgBoC8UoKKoGBCFhpt5wdfvQhpp3VdqB7l8ElXS9xn8HlQIYIf0EJiT65sCQjwapjiWzfZAuWoVXn2vJIPt2VOqZCe6JLz6qt63ZAtpDgDf0ZA62F1vDDPAZDZD";
-const SECONDARY_PAGE_APP_ID = 263902037430900;
+const APP_ID = 1834920826529264;
 const client = new Wit({
   accessToken: "5IRZPGUBOVZK67LKPO4HTMHPITBRDJSN",
   logger: new log.Logger(log.DEBUG)
@@ -331,7 +331,7 @@ function handlePostback(sender_psid, received_postback) {
           "recipient": {
             "id": sender_psid
           },
-          "target_app_id": SECONDARY_PAGE_APP_ID,
+          "target_app_id": APP_ID,
           "metadata": "Go to page inbox",
           "message": {
             "text": "Wait a minute. We are passing to takemetour support"
