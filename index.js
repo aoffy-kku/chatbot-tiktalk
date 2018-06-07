@@ -11,11 +11,6 @@ const client = new Wit({
   accessToken: "5IRZPGUBOVZK67LKPO4HTMHPITBRDJSN",
   logger: new log.Logger(log.DEBUG)
 });
-
-const texts = {
-  greeting: ["Hi", "Hello", "What's up"],
-  farewell: ["Good bye", "Hope to see you again", "Bye"]
-};
 const logo_url = `https://lh3.googleusercontent.com/sNzOU5yocb97rUQyqKVJWs5BGGMcYwwEIi-wE3pIRL0kyBbqV8uYoMdYAzlv4mTHLz3H=w300`;
 const base_url = `https://www.takemetour.com/`;
 const help_url = `https://takemetoursupport.zendesk.com/hc/en-us`;
@@ -27,6 +22,18 @@ const partners = "PARTNERS";
 const LX = "LX";
 const tickets = "TICKETS";
 const email = "contact@takemetour.com";
+const needhelp_text = {
+  base: "Do you need help about traveler, partner, local expert or ticket?"
+};
+const travelers_text = {
+  base: "Do you want to ask about account setting, booking process, payment process, post-trip process or cancellation policy?"
+};
+const lx_text = {
+  base: "Do you want to ask about account setting, booking process, payment process, post-trip process or cancellation policy?"
+}
+const tickets_text = {
+  base: "Do you want to ask about ticket info, how to redeem, do not received e-ticket?"
+};
 const travelers_url = {
   base: "https://takemetoursupport.zendesk.com/hc/en-us/categories/202599547-For-Traveler",
   account: "https://takemetoursupport.zendesk.com/hc/en-us/sections/204120357-Basic-101-How-does-TakeMeTour-work-",
@@ -37,11 +44,11 @@ const travelers_url = {
 };
 const lx_url = {
   base: "https://takemetoursupport.zendesk.com/hc/en-us/categories/202608398-For-Local-Expert",
-  account: "",
-  trip: "",
-  booking: "",
-  posttrip: "",
-  cancellation: ""
+  account: "https://takemetoursupport.zendesk.com/hc/en-us/sections/203919257-FAQs",
+  trip: "https://takemetoursupport.zendesk.com/hc/en-us/sections/203919267-Trip-Listing",
+  booking: "https://takemetoursupport.zendesk.com/hc/en-us/sections/203988688-Booking",
+  posttrip: "https://takemetoursupport.zendesk.com/hc/en-us/sections/203954908-Tips",
+  cancellation: "https://takemetoursupport.zendesk.com/hc/en-us/articles/217757647-Change-and-Cancellation-Policies-for-Local-Experts"
 };
 const tickets_url = {
   info: "",
@@ -71,14 +78,34 @@ app.post('/webhook', (req, res) => {
         console.log("MESSAGE!!");
         if (message.text) {
           if (isEnglish(message.text)) {
+            if(isGreeting(message.nlp)) {
+              handlePostback(sender_psid, { payload: welcome });
+            } else if(isThanks(message.nlp)) {
+              handleMessage(sender_psid, "You're welcome");
+            } else if(isBye(message.nlp)) {
+              handleMessage(sender_psid, ":)");
+            } else if(isTraveler(message.text)) {
+              handleMessage(sender_psid, travelers_text.base);
+            } else if(isPartner(message.text)) {
+              handleMessage(sender_psid, `Please contact us at ${email}`);
+            } else if(isLX(message.text)) {
+              handleMessage(sender_psid, lx_text.base);
+            } else if(isTicket(message.text)) {
+              handleMessage(sender_psid, `Comming soon`);
+            } else {
+              handleMessage(sender_psid, "Wait a minute");
+            }
             //handleMessage(sender_psid, webhook_event.message);
-            handlePostback(sender_psid, { payload: welcome });
+            // handlePostback(sender_psid, { payload: welcome });
             // Send message to Wit.ai
-            client.message(message.text, {})
-              .then((data) => {
-                console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-              })
-              .catch(console.error);
+            // client.message(message.text, {})
+            //   .then((data) => {
+            //     console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+            //   })
+            //   .catch(console.error);
+
+          } else {
+            handleMessage(sender_psid, "English please.");
           }
         }
       } else if (postback) {
@@ -181,61 +208,7 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case need_help:
       console.log(need_help);
-      response_message = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
-            "elements": [
-              {
-                "title": "Welcome to TakeMeTour's Help Center",
-                "image_url": logo_url,
-                "subtitle": "Find Your Answers of Traveling Here",
-                "default_action": {
-                  "type": "web_url",
-                  "url": help_url,
-                  "messenger_extensions": false,
-                  "webview_height_ratio": "tall"
-                }
-              }, {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Travelers",
-                    "payload": travelers
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Partners",
-                    "payload": partners
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Local Expert",
-                    "payload": LX
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Tickets",
-                    "payload": tickets
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      };
-      callSendAPI(sender_psid, response_message);
+      handleMessage(sender_psid, );
       break;
     case travelers:
       console.log(travelers);
@@ -440,4 +413,39 @@ function callSendAPI(sender_psid, response) {
 function isEnglish(message) {
   const regexp = new RegExp("^[a-zA-Z0-9$@$!%*?&#^-_. +]+$");
   return regexp.test(message.text);
+}
+
+function isGreeting(nlp) {
+  const greeting = firstEntities(nlp, 'greeting');
+  return (greeting && greeting.confidence > 0.8);
+}
+
+function isThanks(nlp) {
+  const thanks = firstEntities(nlp, 'thanks');
+  return (thanks && thanks.confidence > 0.8);
+}
+
+function isBye(nlp) {
+  const bye = firstEntities(nlp, 'bye');
+  return (bye && bye.confidence > 0.8);
+}
+
+function isTraveler(text) {
+  text = text.toLowerCase();
+  return (text === "travelers" || text === "traveler");
+}
+
+function isPartner(text) {
+  text = text.toLowerCase();
+  return (text === "partners" || text === "partner");
+}
+
+function isLX(text) {
+  text = text.toLowerCase();
+  return (text === "localexpert" || text === "local expert" || text === "lx");
+}
+
+function isTicket(text) {
+  text = text.toLowerCase();
+  return (text === "tickets" || text === "ticket");
 }
