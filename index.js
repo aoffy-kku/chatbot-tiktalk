@@ -246,7 +246,7 @@ app.post('/webhook', (req, res) => {
             if (isGreeting(message.nlp)) {
               handlePostback(sender_psid, { payload: welcome });
             } else if (isThanks(message.nlp)) {
-              handleMessage(sender_psid, "You're welcome")SECONDARY_PAGE_APP_ID
+              handleMessage(sender_psid, "You're welcome")
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
