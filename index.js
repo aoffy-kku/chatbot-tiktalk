@@ -66,9 +66,8 @@ app.post('/webhook', (req, res) => {
 
   if (body.object === 'page') {
     body.entry.forEach(function (entry) {
-
-      let webhook_event = entry.messaging[0];
       console.log("ENTRY: ", entry);
+      let webhook_event = entry.messaging[0];
       console.log("WEBHOOK_EVENT: ", webhook_event);
 
       let sender_psid = webhook_event.sender.id;
