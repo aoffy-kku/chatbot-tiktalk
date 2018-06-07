@@ -4,9 +4,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const { Wit, log } = require('node-wit');
+const curl = new (require('curl-request'))();
 
 const PORT = process.env.PORT || 1337;
 const PAGE_ACCESS_TOKEN = "EAAaE2cwOZAfABAH7C23UMiyxtk9aZBnfLskVqBBK04ZB5p20201b54CgBoC8UoKKoGBCFhpt5wdfvQhpp3VdqB7l8ElXS9xn8HlQIYIf0EJiT65sCQjwapjiWzfZAuWoVXn2vJIPt2VOqZCe6JLz6qt63ZAtpDgDf0ZA62F1vDDPAZDZD";
+const SECONDARY_PAGE_APP_ID = "263902037430900";
 const client = new Wit({
   accessToken: "5IRZPGUBOVZK67LKPO4HTMHPITBRDJSN",
   logger: new log.Logger(log.DEBUG)
@@ -222,15 +224,15 @@ app.post('/webhook', (req, res) => {
 
   if (body.object === 'page') {
     body.entry.forEach(function (entry) {
-      console.log("ENTRY: ", JSON.stringify(entry));
+      console.log("ENTRY: ", JSON.stringify(entrSECONDARY_PAGE_APP_ID));
       let webhook_event = null;
       if (entry.messaging) {
         webhook_event = entry.messaging[0];
       } else {
         webhook_event = entry.standby[0];
       }
-      // console.log("WEBHOOK_EVENT: ", webhook_event);
-      let sender_psid = webhook_event.sender.id;
+      // console.log("WEBHOOK_EVENT: ", webhook_SECONDARY_PAGE_APP_IDvent);
+      let sender_psid = webhook_event.sender.id;SECONDARY_PAGE_APP_ID
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
       const postback = webhook_event.postback;
@@ -262,7 +264,7 @@ app.post('/webhook', (req, res) => {
           } else {
             handleMessage(sender_psid, "English please.");
           }
-        } else if(message.postback) {
+        } else if (message.postback) {
           handlePostback(sender_psid, message.postback);
         }
       } else if (postback) {
@@ -324,10 +326,21 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case chatting:
       console.log(chatting);
-      // response_message = {
-      //   "text": "Hello"
-      // };
-      // callSendAPI(sender_psid, response_message);
+      curl
+        .setBody({
+          "recipient": {
+            "id": sender_psid
+          },
+          "target_app_id": SECONDARY_PAGE_APP_ID,
+          "metadata": "Wait a minute"
+        })
+        .post(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`)
+        .then(({ statusCode, body, headers }) => {
+          console.log(statusCode, body, headers)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
       break;
     case need_help:
       console.log(need_help);
