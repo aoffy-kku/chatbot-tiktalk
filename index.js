@@ -262,6 +262,8 @@ app.post('/webhook', (req, res) => {
           } else {
             handleMessage(sender_psid, "English please.");
           }
+        } else if(message.postback) {
+          handlePostback(sender_psid, message.postback);
         }
       } else if (postback) {
         // console.log("POSTBACK!!");
