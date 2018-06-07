@@ -232,6 +232,7 @@ app.post('/webhook', (req, res) => {
       }
       // console.log("WEBHOOK_EVENT: ", webhook_event);
       let sender_psid = webhook_event.sender.id;
+      let recipient_psid = webhook_event.recipient.id;
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
       const postback = webhook_event.postback;
@@ -249,7 +250,7 @@ app.post('/webhook', (req, res) => {
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
-              handlePostback(sender_psid, { payload: chatting });
+              handlePostback(recipient_psid, { payload: chatting });
             }
             //handleMessage(sender_psid, webhook_event.mesSECONDARY_PAGE_APP_IDage);
             // handlePostback(sender_psid, { payload: welcSECONDARY_PAGE_APP_IDme });
@@ -261,7 +262,7 @@ app.post('/webhook', (req, res) => {
             //   .catch(console.error);
 
           } else {
-            handleMessage(sender_psid, "English please.");
+            handleMessage(recipient_psid, "English please.");
           }
         } else if (message.postback) {
           handlePostback(sender_psid, message.postback);
