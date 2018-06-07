@@ -108,7 +108,6 @@ const needhelp_message = {
       "title": "Ticket",
       "payload": tickets,
     },
-    ,
     {
       "content_type": "text",
       "title": "Start Chatting",
