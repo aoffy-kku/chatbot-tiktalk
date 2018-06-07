@@ -417,7 +417,7 @@ function isEnglish(message) {
 }
 
 function isGreeting(nlp) {
-  const greeting = firstEntities(nlp, 'greeting');
+  const greeting = firstEntities(nlp, 'greetings');
   return (greeting && greeting.confidence > 0.8);
 }
 
