@@ -105,6 +105,12 @@ const needhelp_message = {
       "content_type": "text",
       "title": "Ticket",
       "payload": tickets,
+    },
+    ,
+    {
+      "content_type": "text",
+      "title": "Start Chatting",
+      "payload": chatting,
     }
   ]
 };
