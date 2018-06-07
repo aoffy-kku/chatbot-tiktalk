@@ -67,9 +67,13 @@ app.post('/webhook', (req, res) => {
   if (body.object === 'page') {
     body.entry.forEach(function (entry) {
       console.log("ENTRY: ", entry);
-      let webhook_event = entry.messaging[0];
+      let webhook_event = null;
+      if(entry.messaging[0]) {
+        webhook_event = entry.messaging[0];
+      } else {
+        webhook_event = entry.standby[0];
+      }
       console.log("WEBHOOK_EVENT: ", webhook_event);
-
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
@@ -209,7 +213,7 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case need_help:
       console.log(need_help);
-      handleMessage(sender_psid, );
+      handleMessage(sender_psid, needhelp_text.base);
       break;
     case travelers:
       console.log(travelers);
