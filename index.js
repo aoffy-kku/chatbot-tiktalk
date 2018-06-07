@@ -136,6 +136,11 @@ const travelers_message = {
       "content_type": "text",
       "title": "Calcellation Policy",
       "payload": travelers_cancellation,
+    },
+    {
+      "content_type": "text",
+      "title": "Back",
+      "payload": need_help,
     }
   ]
 };
@@ -166,6 +171,11 @@ const lx_message = {
       "content_type": "text",
       "title": "Calcellation Policy",
       "payload": lx_cancellation,
+    },
+    {
+      "content_type": "text",
+      "title": "Back",
+      "payload": need_help,
     }
   ]
 }
@@ -442,6 +452,11 @@ function getTemplate(baseUrl, secUrl) {
                 "type": "web_url",
                 "title": "View Site",
                 "url": secUrl
+              },
+              {
+                "type": "postback",
+                "title": "Back",
+                "payload": need_help,
               }
             ]
           }
