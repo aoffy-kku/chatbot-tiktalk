@@ -230,7 +230,9 @@ app.post('/webhook', (req, res) => {
       const postback = webhook_event.postback;
       if (message) {
         console.log("MESSAGE!!");
-        if (message.text) {
+        if(message.quick_reply) {
+          handlePostback(sender_psid, message.quick_reply);
+        } else if (message.text && isEnglish(message.text)) {
           console.log("NLP: ", JSON.stringify(message.nlp));
           if (isEnglish(message.text)) {
             if (isGreeting(message.nlp)) {
@@ -239,14 +241,6 @@ app.post('/webhook', (req, res) => {
               handleMessage(sender_psid, "You're welcome");
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
-            } else if (isTraveler(message.text)) {
-              handleMessage(sender_psid, travelers_text.base);
-            } else if (isPartner(message.text)) {
-              handleMessage(sender_psid, `Please contact us at ${email}`);
-            } else if (isLX(message.text)) {
-              handleMessage(sender_psid, lx_text.base);
-            } else if (isTicket(message.text)) {
-              handleMessage(sender_psid, `Comming soon`);
             } else {
               handleMessage(sender_psid, "Wait a minute");
             }
