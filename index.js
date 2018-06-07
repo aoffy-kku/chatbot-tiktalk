@@ -250,6 +250,7 @@ app.post('/webhook', (req, res) => {
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
+              handleMessage(sender_psid, "Wait a minute. We are passing to takemetour support");
               handlePostback(recipient_psid, { payload: chatting });
             }
             //handleMessage(sender_psid, webhook_event.mesSECONDARY_PAGE_APP_IDage);
@@ -333,10 +334,7 @@ function handlePostback(sender_psid, received_postback) {
             "id": sender_psid
           },
           "target_app_id": APP_ID,
-          "metadata": "Go to page inbox",
-          "message": {
-            "text": "Wait a minute. We are passing to takemetour support"
-          }
+          "metadata": "Go to page inbox"
         }), // data can be `string` or {object}!
         headers:{
           'Content-Type': 'application/json'
