@@ -333,10 +333,10 @@ function handlePostback(sender_psid, received_postback) {
             "id": sender_psid
           },
           "target_app_id": APP_ID,
-          "metadata": "Go to page inbox"
-          // "message": {
-          //   "text": "Wait a minute. We are passing to takemetour support"
-          // }
+          "metadata": "Go to page inbox",
+          "message": {
+            "text": "Wait a minute. We are passing to takemetour support"
+          }
         }), // data can be `string` or {object}!
         headers:{
           'Content-Type': 'application/json'
