@@ -33,22 +33,22 @@ const lx_cancellation = "LX_CANCELLATION";
 const tickets = "TICKETS";
 const email = "contact@takemetour.com";
 const partner_message = {
-  "attachment": {
-    "type": "template",
-    "payload": {
-      "template_type": "button",
-      "text": "Do you want to send an email?",
-      "buttons": [
-        {
-          "type": "web_url",
-          "title": "Send",
-          "url": `mailto:${email}`
-        }
-      ]
-    }
-  }
+  // "attachment": {
+  //   "type": "template",
+  //   "payload": {
+  //     "template_type": "button",
+  //     "text": "Do you want to send an email?",
+  //     "buttons": [
+  //       {
+  //         "type": "web_url",
+  //         "title": "Send",
+  //         "url": `mailto:${email}`
+  //       }
+  //     ]
+  //   }
+  // }
+  "text": `Please contact us at <a href="mailto:${email}">${email}</a>`
 };
-
 const welcome_message = {
   "attachment": {
     "type": "template",
@@ -330,6 +330,46 @@ function handlePostback(sender_psid, received_postback) {
       console.log(partners);
       callSendAPI(sender_psid, partner_message);
       break;
+    case travelers_account:
+      console.log(travelers_account);
+      callSendAPI(sender_psid, getTemplate(travelers_url.base, travelers_url.account));
+      break;
+    case travelers_booking:
+      console.log(travelers_booking);
+      callSendAPI(sender_psid, getTemplate(travelers_url.base, travelers_url.booking));
+      break;
+    case travelers_cancellation:
+      console.log(travelers_cancellation);
+      callSendAPI(sender_psid, getTemplate(travelers_url.base, travelers_url.cancellation));
+      break;
+    case travelers_payment:
+      console.log(travelers_payment);
+      callSendAPI(sender_psid, getTemplate(travelers_url.base, travelers_url.payment));
+      break;
+    case travelers_posttrip:
+      console.log(travelers_posttrip);
+      callSendAPI(sender_psid, getTemplate(travelers_url.base, travelers_url.posttrip));
+      break;
+    case lx_account:
+      console.log(lx_account);
+      callSendAPI(sender_psid, getTemplate(lx_url.base, lx_url.account));
+      break;
+    case lx_booking:
+      console.log(lx_booking);
+      callSendAPI(sender_psid, getTemplate(lx_url.base, lx_url.booking));
+      break;
+    case lx_trip:
+      console.log(lx_trip);
+      callSendAPI(sender_psid, getTemplate(lx_url.base, lx_url.trip));
+      break;
+    case lx_posttrip:
+      console.log(lx_posttrip);
+      callSendAPI(sender_psid, getTemplate(lx_url.base, lx_url.posttrip));
+      break;
+    case lx_cancellation:
+      console.log(lx_cancellation);
+      callSendAPI(sender_psid, getTemplate(lx_url.base, lx_url.cancellation));
+      break;
     default:
       break;
   }
@@ -378,4 +418,36 @@ function isThanks(nlp) {
 function isBye(nlp) {
   const bye = firstEntities(nlp, 'bye');
   return (bye && bye.confidence > 0.8);
+}
+
+function getTemplate(baseUrl, secUrl) {
+  const template = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [
+          {
+            "title": "Welcome to takemetour",
+            "image_url": logo_url,
+            "subtitle": `Thailand's Largest Selection of Local Experiences`,
+            "default_action": {
+              "type": "web_url",
+              "url": baseUrl,
+              "messenger_extensions": false,
+              "webview_height_ratio": "tall"
+            },
+            "buttons": [
+              {
+                "type": "web_url",
+                "title": "View Site",
+                "url": secUrl
+              }
+            ]
+          }
+        ]
+      }
+    }
+  };
+  return template;
 }
