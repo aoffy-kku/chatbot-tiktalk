@@ -218,22 +218,22 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function (entry) {
       console.log("ENTRY: ", entry);
       let webhook_event = null;
-      if (entry.messaging[0]) {
+      if (entry.messaging) {
         webhook_event = entry.messaging[0];
       } else {
         webhook_event = entry.standby[0];
       }
-      console.log("WEBHOOK_EVENT: ", webhook_event);
+      // console.log("WEBHOOK_EVENT: ", webhook_event);
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
       const postback = webhook_event.postback;
       if (message) {
-        console.log("MESSAGE!!");
+        // console.log("MESSAGE!!");
         if(message.quick_reply) {
           handlePostback(sender_psid, message.quick_reply);
-        } else if (message.text && isEnglish(message.text)) {
-          console.log("NLP: ", JSON.stringify(message.nlp));
+        } else if (message.text) {
+          // console.log("NLP: ", JSON.stringify(message.nlp));
           if (isEnglish(message.text)) {
             if (isGreeting(message.nlp)) {
               handlePostback(sender_psid, { payload: welcome });
@@ -242,7 +242,7 @@ app.post('/webhook', (req, res) => {
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
-              handleMessage(sender_psid, "Wait a minute");
+              handlePostback(sender_psid, { payload: welcome });
             }
             //handleMessage(sender_psid, webhook_event.message);
             // handlePostback(sender_psid, { payload: welcome });
@@ -258,7 +258,7 @@ app.post('/webhook', (req, res) => {
           }
         }
       } else if (postback) {
-        console.log("POSTBACK!!");
+        // console.log("POSTBACK!!");
         handlePostback(sender_psid, postback);
       }
     });
@@ -308,7 +308,7 @@ function handleMessage(sender_psid, received_message) {
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  console.log("POSTBACK: ", JSON.stringify(received_postback));
+  // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case welcome:
       console.log(welcome);
@@ -388,24 +388,4 @@ function isThanks(nlp) {
 function isBye(nlp) {
   const bye = firstEntities(nlp, 'bye');
   return (bye && bye.confidence > 0.8);
-}
-
-function isTraveler(text) {
-  text = text.toLowerCase();
-  return (text === "travelers" || text === "traveler");
-}
-
-function isPartner(text) {
-  text = text.toLowerCase();
-  return (text === "partners" || text === "partner");
-}
-
-function isLX(text) {
-  text = text.toLowerCase();
-  return (text === "localexpert" || text === "local expert" || text === "lx");
-}
-
-function isTicket(text) {
-  text = text.toLowerCase();
-  return (text === "tickets" || text === "ticket");
 }
