@@ -18,22 +18,172 @@ const welcome = "WELCOME";
 const need_help = "NEED_HELP";
 const chatting = "CHATTING";
 const travelers = "TRAVELERS";
+const travelers_account = "TRAVELERS_ACCOUNT";
+const travelers_booking = "TRAVELERS_BOOKING";
+const travelers_payment = "TRAVELERS_PAYMENT";
+const travelers_posttrip = "TRAVELERS_POSTTRIP";
+const travelers_cancellation = "TRAVELERS_CANCELLATION";
 const partners = "PARTNERS";
-const LX = "LX";
+const lx = "LOCAL_EXPERT";
+const lx_account = "LX_ACCOUNT";
+const lx_booking = "LX_BOOKING";
+const lx_trip = "LX_TRIP";
+const lx_posttrip = "LX_POSTTRIP";
+const lx_cancellation = "LX_CANCELLATION";
 const tickets = "TICKETS";
 const email = "contact@takemetour.com";
-const needhelp_text = {
-  base: "Do you need help about traveler, partner, local expert or ticket?"
+const partner_message = {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": [
+        {
+          "title": "Welcome to takemetour",
+          "subtitle": `Thailand's Largest Selection of Local Experiences`,
+          "default_action": {
+            "type": "web_url",
+            "url": `https://www.takemetour.com/about-us`,
+            "messenger_extensions": false,
+            "webview_height_ratio": "tall"
+          },
+          "buttons": [
+            {
+              "type": "web_url",
+              "title": "Send Email",
+              "url": `mailto:${email}`
+            }
+          ]
+        }
+      ]
+    }
+  }
 };
-const travelers_text = {
-  base: "Do you want to ask about account setting, booking process, payment process, post-trip process or cancellation policy?"
+const welcome_message = {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": [
+        {
+          "title": "Welcome to takemetour",
+          "image_url": logo_url,
+          "subtitle": `Thailand's Largest Selection of Local Experiences`,
+          "default_action": {
+            "type": "web_url",
+            "url": base_url,
+            "messenger_extensions": false,
+            "webview_height_ratio": "tall"
+          },
+          "buttons": [
+            {
+              "type": "postback",
+              "title": "Go Help",
+              "payload": need_help
+            },
+            {
+              "type": "postback",
+              "title": "Start Chatting",
+              "payload": chatting
+            }
+          ]
+        }
+      ]
+    }
+  }
 };
-const lx_text = {
-  base: "Do you want to ask about account setting, booking process, payment process, post-trip process or cancellation policy?"
+
+const needhelp_message = {
+  "text": "Do you want to ask about: ",
+  "quick_replies": [
+    {
+      "content_type": "text",
+      "title": "Traveler",
+      "payload": travelers,
+    },
+    {
+      "content_type": "text",
+      "title": "Partner",
+      "payload": partners,
+    },
+    {
+      "content_type": "text",
+      "title": "Local Expert",
+      "payload": lx,
+    },
+    {
+      "content_type": "text",
+      "title": "Ticket",
+      "payload": tickets,
+    }
+  ]
+};
+
+const travelers_message = {
+  "text": "Traveler topics: ",
+  "quick_replies": [
+    {
+      "content_type": "text",
+      "title": "Account Setting",
+      "payload": travelers_account,
+    },
+    {
+      "content_type": "text",
+      "title": "Booking Process",
+      "payload": travelers_booking,
+    },
+    {
+      "content_type": "text",
+      "title": "Payment Process",
+      "payload": travelers_payment,
+    },
+    {
+      "content_type": "text",
+      "title": "Post-Trip Setting",
+      "payload": travelers_posttrip,
+    },
+    {
+      "content_type": "text",
+      "title": "Calcellation Policy",
+      "payload": travelers_cancellation,
+    }
+  ]
+};
+const lx_message = {
+  "text": "Traveler topics: ",
+  "quick_replies": [
+    {
+      "content_type": "text",
+      "title": "Account Setting",
+      "payload": lx_account,
+    },
+    {
+      "content_type": "text",
+      "title": "Booking Process",
+      "payload": lx_booking,
+    },
+    {
+      "content_type": "text",
+      "title": "Trip Listing",
+      "payload": lx_trip,
+    },
+    {
+      "content_type": "text",
+      "title": "Post-Trip Setting",
+      "payload": lx_posttrip,
+    },
+    {
+      "content_type": "text",
+      "title": "Calcellation Policy",
+      "payload": lx_cancellation,
+    }
+  ]
 }
+
 const tickets_text = {
   base: "Do you want to ask about ticket info, how to redeem, do not received e-ticket?"
 };
+
 const travelers_url = {
   base: "https://takemetoursupport.zendesk.com/hc/en-us/categories/202599547-For-Traveler",
   account: "https://takemetoursupport.zendesk.com/hc/en-us/sections/204120357-Basic-101-How-does-TakeMeTour-work-",
@@ -68,7 +218,7 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function (entry) {
       console.log("ENTRY: ", entry);
       let webhook_event = null;
-      if(entry.messaging[0]) {
+      if (entry.messaging[0]) {
         webhook_event = entry.messaging[0];
       } else {
         webhook_event = entry.standby[0];
@@ -83,19 +233,19 @@ app.post('/webhook', (req, res) => {
         if (message.text) {
           console.log("NLP: ", JSON.stringify(message.nlp));
           if (isEnglish(message.text)) {
-            if(isGreeting(message.nlp)) {
+            if (isGreeting(message.nlp)) {
               handlePostback(sender_psid, { payload: welcome });
-            } else if(isThanks(message.nlp)) {
+            } else if (isThanks(message.nlp)) {
               handleMessage(sender_psid, "You're welcome");
-            } else if(isBye(message.nlp)) {
+            } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
-            } else if(isTraveler(message.text)) {
+            } else if (isTraveler(message.text)) {
               handleMessage(sender_psid, travelers_text.base);
-            } else if(isPartner(message.text)) {
+            } else if (isPartner(message.text)) {
               handleMessage(sender_psid, `Please contact us at ${email}`);
-            } else if(isLX(message.text)) {
+            } else if (isLX(message.text)) {
               handleMessage(sender_psid, lx_text.base);
-            } else if(isTicket(message.text)) {
+            } else if (isTicket(message.text)) {
               handleMessage(sender_psid, `Comming soon`);
             } else {
               handleMessage(sender_psid, "Wait a minute");
@@ -164,226 +314,37 @@ function handleMessage(sender_psid, received_message) {
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  let response_message = null;
   console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case welcome:
       console.log(welcome);
-      response_message = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [
-              {
-                "title": "Welcome to takemetour",
-                "image_url": logo_url,
-                "subtitle": `Thailand's Largest Selection of Local Experiences`,
-                "default_action": {
-                  "type": "web_url",
-                  "url": base_url,
-                  "messenger_extensions": false,
-                  "webview_height_ratio": "tall"
-                },
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Go Help",
-                    "payload": need_help
-                  },
-                  {
-                    "type": "postback",
-                    "title": "Start Chatting",
-                    "payload": chatting
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      };
-      callSendAPI(sender_psid, response_message);
+      callSendAPI(sender_psid, welcome_message);
       break;
     case chatting:
       console.log(chatting);
-      response_message = {
-        "text": "Hello"
-      };
-      callSendAPI(sender_psid, response_message);
+      // response_message = {
+      //   "text": "Hello"
+      // };
+      // callSendAPI(sender_psid, response_message);
       break;
     case need_help:
       console.log(need_help);
-      handleMessage(sender_psid, needhelp_text.base);
+      callSendAPI(sender_psid, needhelp_message);
       break;
     case travelers:
       console.log(travelers);
-      response_message = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
-            "elements": [
-              {
-                "title": "Welcome to TakeMeTour's Help Center",
-                "image_url": logo_url,
-                "subtitle": "For Traveler",
-                "default_action": {
-                  "type": "web_url",
-                  "url": travelers_url.base,
-                  "messenger_extensions": false,
-                  "webview_height_ratio": "tall"
-                }
-              },
-              {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Account Setting",
-                    "url": travelers_url.account
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Booking Process",
-                    "url": travelers_url.booking
-                  },
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Payment Process",
-                    "url": travelers_url.payment
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Post-Trip Process",
-                    "url": travelers_url.posttrip
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Cancellation Policy",
-                    "url": travelers_url.cancellation
-                  }
-                ]
-              },
-              {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Back",
-                    "payload  ": need_help
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      };
-      callSendAPI(sender_psid, response_message);
+      callSendAPI(sender_psid, travelers_message);
       break;
-    case LX:
-      console.log(LX);
-      response_message = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
-            "elements": [
-              {
-                "title": "Welcome to TakeMeTour's Help Center",
-                "image_url": logo_url,
-                "subtitle": "For Local Expert",
-                "default_action": {
-                  "type": "web_url",
-                  "url": lx_url.base,
-                  "messenger_extensions": false,
-                  "webview_height_ratio": "tall"
-                },
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Account Setting",
-                    "url": lx_url.account,
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall"
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Booking Process",
-                    "url": lx_url.booking,
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall"
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Trip Listing",
-                    "url": lx_url.trip,
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall"
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Post-Trip Process",
-                    "url": lx_url.posttrip,
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall"
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "web_url",
-                    "title": "Cancellation Policy",
-                    "url": lx_url.cancellation,
-                    "messenger_extensions": false,
-                    "webview_height_ratio": "tall"
-                  }
-                ]
-              }, {
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Back",
-                    "payload": need_help
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      };
-      callSendAPI(sender_psid, response_message);
+    case lx:
+      console.log(lx);
+      callSendAPI(sender_psid, lx_message);
       break;
     case tickets:
-      callSendAPI(sender_psid, response_message);
+      // callSendAPI(sender_psid, response_message);
       break;
     case partners:
       console.log(partners);
-      response_message = {
-        "text": email
-      };
-      callSendAPI(sender_psid, response_message);
+      callSendAPI(sender_psid, partner_message);
       break;
     default:
       break;
