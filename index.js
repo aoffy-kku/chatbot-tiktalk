@@ -325,7 +325,6 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case chatting:
       console.log(chatting);
-      handleMessage(sender_psid, "Wait a minute. We are connecting to help center");
       curl
         .setHeaders([
           'Content-Type: application/json'
