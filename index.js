@@ -249,7 +249,7 @@ app.post('/webhook', (req, res) => {
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
-              handlePostback(sender_psid, { payload: welcoSECONDARY_PAGE_APP_IDe });
+              handlePostback(sender_psid, { payload: chatting });
             }
             //handleMessage(sender_psid, webhook_event.mesSECONDARY_PAGE_APP_IDage);
             // handlePostback(sender_psid, { payload: welcSECONDARY_PAGE_APP_IDme });
@@ -325,13 +325,17 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case chatting:
       console.log(chatting);
+      handleMessage(sender_psid, "Wait a minute. We are connecting to help center");
       curl
+        .setHeaders([
+          'Content-Type: application/json'
+        ])
         .setBody({
           "recipient": {
             "id": sender_psid
           },
           "target_app_id": SECONDARY_PAGE_APP_ID,
-          "metadata": "String to pass to secondary receiver app"
+          "metadata": "Go to page inbox"
         })
         .post(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`)
         .then(({ statusCode, body, headers }) => {
