@@ -224,15 +224,15 @@ app.post('/webhook', (req, res) => {
 
   if (body.object === 'page') {
     body.entry.forEach(function (entry) {
-      console.log("ENTRY: ", JSON.stringify(entrSECONDARY_PAGE_APP_ID));
+      console.log("ENTRY: ", JSON.stringify(entry));
       let webhook_event = null;
       if (entry.messaging) {
         webhook_event = entry.messaging[0];
       } else {
         webhook_event = entry.standby[0];
       }
-      // console.log("WEBHOOK_EVENT: ", webhook_SECONDARY_PAGE_APP_IDvent);
-      let sender_psid = webhook_event.sender.id;SECONDARY_PAGE_APP_ID
+      // console.log("WEBHOOK_EVENT: ", webhook_event);
+      let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
       const postback = webhook_event.postback;
@@ -246,14 +246,14 @@ app.post('/webhook', (req, res) => {
             if (isGreeting(message.nlp)) {
               handlePostback(sender_psid, { payload: welcome });
             } else if (isThanks(message.nlp)) {
-              handleMessage(sender_psid, "You're welcome");
+              handleMessage(sender_psid, "You're welcome")SECONDARY_PAGE_APP_ID
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
-              handlePostback(sender_psid, { payload: welcome });
+              handlePostback(sender_psid, { payload: welcoSECONDARY_PAGE_APP_IDe });
             }
-            //handleMessage(sender_psid, webhook_event.message);
-            // handlePostback(sender_psid, { payload: welcome });
+            //handleMessage(sender_psid, webhook_event.mesSECONDARY_PAGE_APP_IDage);
+            // handlePostback(sender_psid, { payload: welcSECONDARY_PAGE_APP_IDme });
             // Send message to Wit.ai
             // client.message(message.text, {})
             //   .then((data) => {
@@ -332,7 +332,7 @@ function handlePostback(sender_psid, received_postback) {
             "id": sender_psid
           },
           "target_app_id": SECONDARY_PAGE_APP_ID,
-          "metadata": "Wait a minute"
+          "metadata": "String to pass to secondary receiver app"
         })
         .post(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`)
         .then(({ statusCode, body, headers }) => {
