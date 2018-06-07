@@ -36,21 +36,14 @@ const partner_message = {
   "attachment": {
     "type": "template",
     "payload": {
-      "template_type": "generic",
+      "template_type": "button  ",
+      "text": "Do you want to send an email?",
       "elements": [
         {
-          "title": "Welcome to takemetour",
-          "subtitle": `Thailand's Largest Selection of Local Experiences`,
-          "default_action": {
-            "type": "web_url",
-            "url": `https://www.takemetour.com/about-us`,
-            "messenger_extensions": false,
-            "webview_height_ratio": "tall"
-          },
           "buttons": [
             {
               "type": "web_url",
-              "title": "Send Email",
+              "title": "Send",
               "url": `mailto:${email}`
             }
           ]
@@ -59,6 +52,7 @@ const partner_message = {
     }
   }
 };
+
 const welcome_message = {
   "attachment": {
     "type": "template",
@@ -230,7 +224,7 @@ app.post('/webhook', (req, res) => {
       const postback = webhook_event.postback;
       if (message) {
         // console.log("MESSAGE!!");
-        if(message.quick_reply) {
+        if (message.quick_reply) {
           handlePostback(sender_psid, message.quick_reply);
         } else if (message.text) {
           // console.log("NLP: ", JSON.stringify(message.nlp));
