@@ -77,6 +77,7 @@ app.post('/webhook', (req, res) => {
       if (message) {
         console.log("MESSAGE!!");
         if (message.text) {
+          console.log("NLP: ", JSON.stringify(message.nlp));
           if (isEnglish(message.text)) {
             if(isGreeting(message.nlp)) {
               handlePostback(sender_psid, { payload: welcome });
