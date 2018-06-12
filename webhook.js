@@ -186,9 +186,9 @@ function callSendAPI(sender_psid, response) {
     if (!err) {
       console.log('message sent!')
     } else {
-      console.error("Unable to send message:" + err);
+      console.error("Unable gitto send message:" + err);
     }
   });
 }
 
-app.listen(PORT, () => console.log(`Messenger Webhook is listening on PORT ${PORT}`));
+app.listen(port, () => console.log(`Messenger Webhook is listening on PORT ${port}`));

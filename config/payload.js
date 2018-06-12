@@ -1,5 +1,5 @@
 const getStarted = 'GET_STARTED';
-const identify ='IDENTIFY';
+const identify = 'IDENTIFY';
 const foreigner = 'FOREIGNER';
 const thai = 'THAI';
 const traveler = {
@@ -36,7 +36,7 @@ const rating = {
   five: 'RATING_FIVE',
 };
 
-export {
+module.exports = {
   getStarted,
   identify,
   foreigner,

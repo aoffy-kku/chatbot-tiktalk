@@ -1,4 +1,4 @@
-import {
+const {
   getStarted,
   identify,
   foreigner,
@@ -10,7 +10,7 @@ import {
   feedback,
   support,
   rating,
-} from './payload';
+} = require('./payload');
 
 const email = "contact@takemetour.com";
 const logo_url = `https://lh3.googleusercontent.com/sNzOU5yocb97rUQyqKVJWs5BGGMcYwwEIi-wE3pIRL0kyBbqV8uYoMdYAzlv4mTHLz3H=w300`;
@@ -264,6 +264,6 @@ function getTemplate(url) {
   return template;
 }
 
-export {
-  messages,
+module.exports = {
+  messages
 };
