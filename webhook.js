@@ -209,6 +209,17 @@ function callSendAPI(sender_psid, response) {
   });
 }
 
+function handleMessage(sender_psid, received_message) {
+  let response;
+
+  if (received_message) {
+    response = {
+      "text": received_message
+    }
+  }
+  callSendAPI(sender_psid, response);
+}
+
 function sendFeedback(sender_psid) {
   setTimeout(() => {
     callSendAPI(sender_psid, messages.feedback);
