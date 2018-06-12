@@ -81,7 +81,7 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
   // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case identify || getStarted:
-      callSendAPI(sender_psid, message.identify);
+      callSendAPI(sender_psid, messages.identify);
       break;
     case traveler.main:
       callSendAPI(sender_psid, messages.traveler.main);
