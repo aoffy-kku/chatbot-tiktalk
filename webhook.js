@@ -43,11 +43,11 @@ app.post('/webhook', (req, res) => {
       const message = webhook_event.message;
       const postback = webhook_event.postback;
       if (message) {
-        if (message.quick_reply) {
-          handlePostback(sender_psid, message.quick_reply);
-        } else if (message.text) {
+        if (message.quick_reply && message.quick_reply !== undefined) {
+          handlePostback(recipient_psid, sender_psid, message.quick_reply);
+        } else if (message.text && message.text !== undefined) {
           handlePostback(recipient_psid, sender_psid, { payload: identify });
-        } else if (message.postback) {
+        } else if (message.postback && message.postback !== undefined) {
           handlePostback(recipient_psid, sender_psid, message.postback);
         }
       } else if (postback) {
