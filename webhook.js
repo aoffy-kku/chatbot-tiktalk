@@ -78,7 +78,7 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-async function handlePostback(recipient_psid, sender_psid, received_postback) {
+function handlePostback(recipient_psid, sender_psid, received_postback) {
   // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case identify || getStarted:
@@ -94,51 +94,51 @@ async function handlePostback(recipient_psid, sender_psid, received_postback) {
       callSendAPI(sender_psid, messages.traveler.main);
       break;
     case traveler.accountSetting:
-      await callSendAPI(sender_psid, messages.traveler.accountSetting);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.traveler.accountSetting);
+      sendFeedback();
       break;
     case traveler.bookingProcess:
-      await callSendAPI(sender_psid, messages.traveler.bookingProcess);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.traveler.bookingProcess);
+      sendFeedback();
       break;
     case traveler.paymentProcess:
-      await callSendAPI(sender_psid, messages.traveler.paymentProcess);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.traveler.paymentProcess);
+      sendFeedback();
       break;
     case traveler.postTripProcess:
-      await callSendAPI(sender_psid, messages.traveler.postTripProcess);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.traveler.postTripProcess);
+      sendFeedback();
       break;
     case traveler.cancellationPolicy:
-      await callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
+      sendFeedback();
       break;
     case partner:
-      await callSendAPI(sender_psid, messages.partner);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.partner);
+      sendFeedback();
       break;
     case localExpert.main:
       callSendAPI(sender_psid, messages.localExpert.main);
       break;
     case localExpert.accountSetting:
-      await callSendAPI(sender_psid, messages.localExpert.accountSetting);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.localExpert.accountSetting);
+      sendFeedback();
       break;
     case localExpert.bookingProcess:
-      await callSendAPI(sender_psid, messages.localExpert.bookingProcess);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.localExpert.bookingProcess);
+      sendFeedback();
       break;
     case localExpert.postTripProcess:
-      await callSendAPI(sender_psid, messages.localExpert.postTripProcess);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.localExpert.postTripProcess);
+      sendFeedback();
       break;
     case localExpert.tripListing:
-      await callSendAPI(sender_psid, messages.localExpert.tripListing);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.localExpert.tripListing);
+      sendFeedback();
       break;
     case localExpert.cancellationPolicy:
-      await callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
-      await callSendAPI(sender_psid, messages.feedback);
+      callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
+      sendFeedback();
       break;
     case ticket:
       break;
@@ -207,6 +207,12 @@ function callSendAPI(sender_psid, response) {
       console.error("Unable gitto send message:" + err);
     }
   });
+}
+
+function sendFeedback() {
+  setTimeout(() => {
+    callSendAPI(sender_psid, messages.feedback);
+  }, 5000);
 }
 
 app.listen(port, () => console.log(`Messenger Webhook is listening on PORT ${port}`));
