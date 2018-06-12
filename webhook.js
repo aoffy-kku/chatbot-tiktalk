@@ -46,7 +46,7 @@ app.post('/webhook', (req, res) => {
         if (message.quick_reply) {
           handlePostback(sender_psid, message.quick_reply);
         } else if (message.text) {
-          handlePostback(recipient_psid, sender_psid, { payload: welcome });
+          handlePostback(recipient_psid, sender_psid, { payload: identify });
         } else if (message.postback) {
           handlePostback(recipient_psid, sender_psid, message.postback);
         }
