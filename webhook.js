@@ -84,6 +84,12 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
     case identify || getStarted:
       callSendAPI(sender_psid, messages.identify);
       break;
+    case foreigner:
+      callSendAPI(sender_psid, messages.foreigner);
+      break;
+    case thai:
+      callSendAPI(sender_psid, messages.thai);
+      break;
     case traveler.main:
       callSendAPI(sender_psid, messages.traveler.main);
       break;
