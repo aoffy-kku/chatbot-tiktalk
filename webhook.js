@@ -171,7 +171,7 @@ function handlePostback(sender_psid, received_postback) {
       });
       break;
     case rating.main:
-      callSendAPI(sender_psid, rating);
+      callSendAPI(sender_psid, messages.rating);
       break;
     case rating.one:
       break;
