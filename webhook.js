@@ -160,6 +160,7 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
         "json": request_body
       }, (err, res, body) => {
         if (!err) {
+          console.log(res);
           console.log('Go to inbox page!');
           handleMessage(sender_psid, "Wait a minute");
         } else {
