@@ -95,50 +95,50 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
       break;
     case traveler.accountSetting:
       callSendAPI(sender_psid, messages.traveler.accountSetting);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case traveler.bookingProcess:
       callSendAPI(sender_psid, messages.traveler.bookingProcess);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case traveler.paymentProcess:
       callSendAPI(sender_psid, messages.traveler.paymentProcess);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case traveler.postTripProcess:
       callSendAPI(sender_psid, messages.traveler.postTripProcess);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case traveler.cancellationPolicy:
       callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case partner:
       callSendAPI(sender_psid, messages.partner);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case localExpert.main:
       callSendAPI(sender_psid, messages.localExpert.main);
       break;
     case localExpert.accountSetting:
       callSendAPI(sender_psid, messages.localExpert.accountSetting);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case localExpert.bookingProcess:
       callSendAPI(sender_psid, messages.localExpert.bookingProcess);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case localExpert.postTripProcess:
       callSendAPI(sender_psid, messages.localExpert.postTripProcess);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case localExpert.tripListing:
       callSendAPI(sender_psid, messages.localExpert.tripListing);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case localExpert.cancellationPolicy:
       callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
-      sendFeedback();
+      sendFeedback(sender_psid);
       break;
     case ticket:
       break;
@@ -209,7 +209,7 @@ function callSendAPI(sender_psid, response) {
   });
 }
 
-function sendFeedback() {
+function sendFeedback(sender_psid) {
   setTimeout(() => {
     callSendAPI(sender_psid, messages.feedback);
   }, 5000);
