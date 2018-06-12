@@ -54,7 +54,7 @@ app.post('/webhook', (req, res) => {
       } else if (postback) {
         handlePostback(sender_psid, postback);
       } else if (pass_thread_control) {
-        handlePostback(sender_psid, { payload: feedback });
+        handlePostback(sender_psid, { payload: rating.main });
       }
     });
     res.status(200).send('EVENT_RECEIVED');
@@ -171,6 +171,7 @@ function handlePostback(sender_psid, received_postback) {
       });
       break;
     case rating.main:
+      callSendAPI(sender_psid, rating);
       break;
     case rating.one:
       break;
