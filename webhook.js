@@ -148,7 +148,7 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
     case support:
       const request_body = {
         "recipient": {
-          "id": recipient_psid
+          "id": sender_psid
         },
         "target_app_id": appId,
         "metadata": "Go to page inbox"
