@@ -250,8 +250,7 @@ app.post('/webhook', (req, res) => {
             } else if (isBye(message.nlp)) {
               handleMessage(sender_psid, ":)");
             } else {
-              handleMessage(sender_psid, "Wait a minute. We are passing to takemetour support");
-              handlePostback(recipient_psid, { payload: chatting });
+              handlePostback(recipient_psid, sender_psid, { payload: chatting });
             }
             //handleMessage(sender_psid, webhook_event.mesSECONDARY_PAGE_APP_IDage);
             // handlePostback(sender_psid, { payload: welcSECONDARY_PAGE_APP_IDme });
@@ -266,11 +265,11 @@ app.post('/webhook', (req, res) => {
             handleMessage(recipient_psid, "English please.");
           }
         } else if (message.postback) {
-          handlePostback(sender_psid, message.postback);
+          handlePostback(recipient_psid, sender_psid, message.postback);
         }
       } else if (postback) {
         // console.log("POSTBACK!!");
-        handlePostback(sender_psid, postback);
+        handlePostback(recipient_psid, sender_psid, postback);
       }
     });
 
@@ -318,7 +317,7 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+function handlePostback(recipient_psid, sender_psid, received_postback) {
   // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case welcome:
@@ -327,11 +326,12 @@ function handlePostback(sender_psid, received_postback) {
       break;
     case chatting:
       console.log(chatting);
+      handleMessage(sender_psid, "Wait a minute. We are passing to takemetour support");
       fetch(`https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`, {
         method: 'POST', // or 'PUT'
         body: JSON.stringify({
           "recipient": {
-            "id": sender_psid
+            "id": recipient_psid
           },
           "target_app_id": APP_ID,
           "metadata": "Go to page inbox"
