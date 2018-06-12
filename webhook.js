@@ -95,39 +95,50 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
       break;
     case traveler.accountSetting:
       callSendAPI(sender_psid, messages.traveler.accountSetting);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.bookingProcess:
       callSendAPI(sender_psid, messages.traveler.bookingProcess);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.paymentProcess:
       callSendAPI(sender_psid, messages.traveler.paymentProcess);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.postTripProcess:
       callSendAPI(sender_psid, messages.traveler.postTripProcess);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.cancellationPolicy:
       callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case partner:
       callSendAPI(sender_psid, messages.partner);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.main:
       callSendAPI(sender_psid, messages.localExpert.main);
       break;
     case localExpert.accountSetting:
       callSendAPI(sender_psid, messages.localExpert.accountSetting);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.bookingProcess:
       callSendAPI(sender_psid, messages.localExpert.bookingProcess);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.postTripProcess:
       callSendAPI(sender_psid, messages.localExpert.postTripProcess);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.tripListing:
       callSendAPI(sender_psid, messages.localExpert.tripListing);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.cancellationPolicy:
       callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
+      callSendAPI(sender_psid, messages.feedback);
       break;
     case ticket:
       break;
