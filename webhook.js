@@ -78,7 +78,7 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function handlePostback(recipient_psid, sender_psid, received_postback) {
+async function handlePostback(recipient_psid, sender_psid, received_postback) {
   // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case identify || getStarted:
@@ -94,51 +94,51 @@ function handlePostback(recipient_psid, sender_psid, received_postback) {
       callSendAPI(sender_psid, messages.traveler.main);
       break;
     case traveler.accountSetting:
-      callSendAPI(sender_psid, messages.traveler.accountSetting);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.traveler.accountSetting);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.bookingProcess:
-      callSendAPI(sender_psid, messages.traveler.bookingProcess);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.traveler.bookingProcess);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.paymentProcess:
-      callSendAPI(sender_psid, messages.traveler.paymentProcess);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.traveler.paymentProcess);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.postTripProcess:
-      callSendAPI(sender_psid, messages.traveler.postTripProcess);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.traveler.postTripProcess);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case traveler.cancellationPolicy:
-      callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.traveler.cancellationPolicy);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case partner:
-      callSendAPI(sender_psid, messages.partner);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.partner);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.main:
       callSendAPI(sender_psid, messages.localExpert.main);
       break;
     case localExpert.accountSetting:
-      callSendAPI(sender_psid, messages.localExpert.accountSetting);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.localExpert.accountSetting);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.bookingProcess:
-      callSendAPI(sender_psid, messages.localExpert.bookingProcess);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.localExpert.bookingProcess);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.postTripProcess:
-      callSendAPI(sender_psid, messages.localExpert.postTripProcess);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.localExpert.postTripProcess);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.tripListing:
-      callSendAPI(sender_psid, messages.localExpert.tripListing);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.localExpert.tripListing);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case localExpert.cancellationPolicy:
-      callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
-      callSendAPI(sender_psid, messages.feedback);
+      await callSendAPI(sender_psid, messages.localExpert.cancellationPolicy);
+      await callSendAPI(sender_psid, messages.feedback);
       break;
     case ticket:
       break;
