@@ -50,6 +50,8 @@ app.post('/webhook', (req, res) => {
           handlePostback(recipient_psid, sender_psid, { payload: identify });
         } else if (message.postback && message.postback !== undefined) {
           handlePostback(recipient_psid, sender_psid, message.postback);
+        } else if(message.pass_thread_control && message.pass_thread_control !== undefined) {
+          handlePostback(recipient_psid, sender_psid, { payload: feedback });
         }
       } else if (postback) {
         handlePostback(recipient_psid, sender_psid, postback);
