@@ -39,22 +39,22 @@ app.post('/webhook', (req, res) => {
       }
       // console.log("WEBHOOK_EVENT: ", webhook_event);
       const sender_psid = webhook_event.sender.id;
-      const recipient_psid = webhook_event.recipient.id;
       // console.log('Sender PSID: ' + sender_psid);
       const message = webhook_event.message;
       const postback = webhook_event.postback;
+      const pass_thread_control = webhook_event.pass_thread_control;
       if (message) {
         if (message.quick_reply && message.quick_reply !== undefined) {
-          handlePostback(recipient_psid, sender_psid, message.quick_reply);
+          handlePostback(sender_psid, message.quick_reply);
         } else if (message.text && message.text !== undefined) {
-          handlePostback(recipient_psid, sender_psid, { payload: identify });
+          handlePostback(sender_psid, { payload: identify });
         } else if (message.postback && message.postback !== undefined) {
-          handlePostback(recipient_psid, sender_psid, message.postback);
-        } else if(message.pass_thread_control && message.pass_thread_control !== undefined) {
-          handlePostback(recipient_psid, sender_psid, { payload: feedback });
+          handlePostback(sender_psid, message.postback);
         }
       } else if (postback) {
-        handlePostback(recipient_psid, sender_psid, postback);
+        handlePostback(sender_psid, postback);
+      } else if (pass_thread_control) {
+        handlePostback(sender_psid, { payload: feedback });
       }
     });
     res.status(200).send('EVENT_RECEIVED');
@@ -80,7 +80,7 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function handlePostback(recipient_psid, sender_psid, received_postback) {
+function handlePostback(sender_psid, received_postback) {
   // console.log("POSTBACK: ", JSON.stringify(received_postback));
   switch (received_postback.payload) {
     case identify || getStarted:
